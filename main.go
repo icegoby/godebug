@@ -35,7 +35,7 @@ func SetUs(us bool) {
     if us {
         f |= log.Lmicroseconds
     } else {
-        f &= ~log.Lmicroseconds
+        f &= ^log.Lmicroseconds
     }
     log.SetFlags(f)
 }
