@@ -30,6 +30,16 @@ func SetDebug(debug bool) {
     conf.Debug = debug
 }
 
+func SetUs(us bool) {
+    f := log.Flags()
+    if us {
+        f |= log.Lmicroseconds
+    } else {
+        f &= ~log.Lmicroseconds
+    }
+    log.SetFlags(f)
+}
+
 func GetDebug() bool {
     return conf.Debug
 }
