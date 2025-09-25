@@ -176,7 +176,7 @@ func (gdb *GoDebug) Print(s string) {
 		vv := "                           " + v + "\n"
 		if i == 0 {
 			t := time.Now()
-			vv = fmt.Sprint("%04d-%02d-%02d %02d:%02d:%02d.%06d %v\n", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond()/1000, v)
+			vv = fmt.Sprintf("%04d-%02d-%02d %02d:%02d:%02d.%06d %v\n", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond()/1000, v)
 		}
 		b := []byte(vv)
 		if n, err := gdb.File.Write(b); err != nil {
