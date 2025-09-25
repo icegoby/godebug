@@ -16,6 +16,7 @@ type GoDebug struct {
 	Debug  bool
 	File   *os.File
 	isFile bool
+	Depth  int
 }
 
 func NewGoDebug() *GoDebug {
@@ -23,6 +24,7 @@ func NewGoDebug() *GoDebug {
 		Debug:  false,
 		File:   os.Stdout,
 		isFile: false,
+		Depth:  0,
 	}
 }
 
@@ -99,6 +101,7 @@ var global_gdb *GoDebug
 func Init() {
 	if global_gdb == nil {
 		global_gdb = NewGoDebug()
+		global_gdb.Depth = 1
 	}
 }
 
@@ -228,7 +231,7 @@ func (gdb *GoDebug) Deinit() {
 
 func (gdb *GoDebug) DPrintf(f string, arg ...interface{}) {
 	if gdb.Debug {
-		s := fmt.Sprintf("%v: ", ___func(2))
+		s := fmt.Sprintf("%v: ", ___func(2+gdb.Depth))
 		s += fmt.Sprintf(f, arg...)
 		gdb.Print(s)
 	}
@@ -236,14 +239,14 @@ func (gdb *GoDebug) DPrintf(f string, arg ...interface{}) {
 
 func (gdb *GoDebug) DPPrintf(arg interface{}) {
 	if gdb.Debug {
-		s := fmt.Sprintf("%v: ", ___func(2))
+		s := fmt.Sprintf("%v: ", ___func(2+gdb.Depth))
 		s += pp.Sprintf("%v", arg)
 		gdb.Print(s)
 	}
 }
 
 func (gdb *GoDebug) LPrintf(f string, arg ...interface{}) {
-	s := fmt.Sprintf("%v: ", ___func(2))
+	s := fmt.Sprintf("%v: ", ___func(2+gdb.Depth))
 	s += fmt.Sprintf(f, arg...)
 	gdb.Print(s)
 }
@@ -251,7 +254,7 @@ func (gdb *GoDebug) LPrintf(f string, arg ...interface{}) {
 func (gdb *GoDebug) _LHexDump(label string, d []byte) {
 	var i int
 
-	s := fmt.Sprintf("%v: %v", ___func(3), label)
+	s := fmt.Sprintf("%v: %v", ___func(3+gdb.Depth), label)
 	gdb.Print(s)
 	s = ""
 	for i = 0; i < len(d); i++ {
