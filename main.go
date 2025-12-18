@@ -96,6 +96,10 @@ func EPrintf(f string, arg ...interface{}) error {
 	return errors.New(s)
 }
 
+func Err(e error) error {
+    return EPrintf("%v", err.Error())
+}
+
 var global_gdb *GoDebug
 
 func Init() {
