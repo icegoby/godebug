@@ -96,7 +96,7 @@ func EPrintf(f string, arg ...interface{}) error {
 	return errors.New(s)
 }
 
-func Err(e error) error {
+func Err(err error) error {
     return EPrintf("%v", err.Error())
 }
 
