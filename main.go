@@ -208,7 +208,7 @@ func (gdb *GoDebug) GetDebug() bool {
 func (gdb *GoDebug) SetFile(fname string) error {
 	gdb.SetStdout()
 	if f, err := os.Create(fname); err != nil {
-		return errors.New(fmt.Sprintf("failed to open file '%v'", fname))
+		return errors.New(fmt.Sprintf("failed to open file '%v': %v", fname, err))
 	} else {
 		gdb.File = f
 		gdb.isFile = true
