@@ -210,6 +210,7 @@ func (gdb *GoDebug) SetFile(fname string) error {
 	if f, err := os.Create(fname); err != nil {
 		return errors.New(fmt.Sprintf("failed to open file '%v': %v", fname, err))
 	} else {
+		DPrintf("INFO log file set to %v", fname)
 		gdb.File = f
 		gdb.isFile = true
 		return nil
