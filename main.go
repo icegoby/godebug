@@ -14,14 +14,18 @@ import (
 
 type GoDebug struct {
 	Debug  bool
+	Stdout bool
 	File   *os.File
 	isFile bool
 	Depth  int
 }
 
+var global_gdb *GoDebug
+
 func NewGoDebug() *GoDebug {
 	return &GoDebug{
 		Debug:  false,
+		Stdout: false,
 		File:   os.Stdout,
 		isFile: false,
 		Depth:  0,
@@ -101,8 +105,6 @@ func Err(err error) error {
 	s += fmt.Sprintf("%v", err.Error())
 	return errors.New(s)
 }
-
-var global_gdb *GoDebug
 
 func Init() {
 	if global_gdb == nil {
@@ -193,6 +195,9 @@ func (gdb *GoDebug) Print(s string) {
 		} else if n != len(b) {
 			LPrintf("%v / %v bytes written (%v)", n, len(b), gdb)
 		}
+		if gdb.Stdout {
+			fmt.Print(vv)
+		}
         gdb.File.Sync()
 	}
 }
@@ -203,6 +208,14 @@ func (gdb *GoDebug) SetDebug(debug bool) {
 
 func (gdb *GoDebug) GetDebug() bool {
 	return gdb.Debug
+}
+
+func (gdb *GoDebug) SetStdout(stdout bool) {
+	gdb.Stdout = stdout
+}
+
+func (gdb *GoDebug) GetStdout() bool {
+	return gdb.Stdout
 }
 
 func (gdb *GoDebug) SetFile(fname string) error {
