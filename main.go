@@ -14,7 +14,7 @@ import (
 
 type GoDebug struct {
 	Debug  bool
-	Stdout bool
+	Dup bool
 	File   *os.File
 	isFile bool
 	Depth  int
@@ -25,7 +25,7 @@ var global_gdb *GoDebug
 func NewGoDebug() *GoDebug {
 	return &GoDebug{
 		Debug:  false,
-		Stdout: false,
+		Dup: false,
 		File:   os.Stdout,
 		isFile: false,
 		Depth:  0,
@@ -210,12 +210,12 @@ func (gdb *GoDebug) GetDebug() bool {
 	return gdb.Debug
 }
 
-func (gdb *GoDebug) SetStdout(stdout bool) {
-	gdb.Stdout = stdout
+func (gdb *GoDebug) SetDup(dup bool) {
+	gdb.Dup = dup
 }
 
-func (gdb *GoDebug) GetStdout() bool {
-	return gdb.Stdout
+func (gdb *GoDebug) GetDup() bool {
+	return gdb.Dup
 }
 
 func (gdb *GoDebug) SetFile(fname string) error {
