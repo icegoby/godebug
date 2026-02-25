@@ -195,7 +195,7 @@ func (gdb *GoDebug) Print(s string) {
 		} else if n != len(b) {
 			LPrintf("%v / %v bytes written (%v)", n, len(b), gdb)
 		}
-		if gdb.Stdout {
+		if gdb.Dup {
 			fmt.Print(vv)
 		}
         gdb.File.Sync()
