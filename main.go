@@ -230,6 +230,13 @@ func (gdb *GoDebug) SetFile(fname string) error {
 	}
 }
 
+func (gdb *GoDebug) Close() {
+	if gdb.isFile {
+		gdb.File.Close()
+		gdb.isFile = false
+	}
+}
+
 func (gdb *GoDebug) SetStdout() {
 	if gdb.isFile {
 		gdb.File.Close()
